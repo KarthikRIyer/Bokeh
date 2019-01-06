@@ -2,7 +2,9 @@ package com.mdgiitr.karthik.bokeh;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +70,34 @@ public class MainActivity extends AppCompatActivity {
                             blueActual[i][j] = (float)Color.blue(bitmap.getPixel(j,i));
                         }
                     }
+                    Bitmap black = Bitmap.createBitmap(
+                            w, // Width
+                            h, // Height
+                            Bitmap.Config.ARGB_8888 // Config
+                    );
+                    Canvas canvas = new Canvas(black);
+                    canvas.drawColor(Color.BLACK);
+                    Paint paint = new Paint();
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setColor(Color.WHITE);
+                    paint.setAntiAlias(true);
+                    canvas.drawCircle(
+                            0, // cx
+                            canvas.getHeight(), // cy
+                            10, // Radius
+                            paint // Paint
+                    );
+                    float[][] redDuplicate = new float[h][w];
+                    float[][] greenDuplicate = new float[h][w];
+                    float[][] blueDuplicate = new float[h][w];
+//                    imageDisplay.setImageBitmap(black);
+                    for (int i =0;i<black.getHeight();i++){
+                        for(int j=0;j<black.getWidth();j++){
+                            redDuplicate[i][j] = (float)Color.red(black.getPixel(j,i));
+                            greenDuplicate[i][j] = (float)Color.green(black.getPixel(j,i));
+                            blueDuplicate[i][j] = (float)Color.blue(black.getPixel(j,i));
+                        }
+                    }
 
                 }
             } catch (FileNotFoundException e) {
@@ -77,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
